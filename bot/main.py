@@ -6,3 +6,5 @@ var = 1
 var = 2
 soma = 1 + 2
 print(soma)
+
+# => olha claudio
