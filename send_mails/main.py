@@ -7,6 +7,10 @@ def ler_emails_arquivo(nome_arquivo):
         emails = [linha.strip() for linha in file.readlines()]
     return emails
 
+def ler_template_html(caminho_arquivo):
+    with open(caminho_arquivo, 'r', encoding='utf-8') as file:
+        return file.read()
+
 if __name__ == "__main__":
     os.chdir('/workspaces/Elysium_py/TCC')
     load_dotenv()
@@ -22,88 +26,11 @@ if __name__ == "__main__":
     caminho_arquivo_emails = 'emails.txt'
     destinatarios = ler_emails_arquivo(caminho_arquivo_emails)
     
+    caminho_templete_html = 'template_email.html'
+    corpo_email_html = ler_template_html(caminho_templete_html)
+        
     assunto = "Olá Mundo!"
-    corpo_email_html ="""
-    <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Exemplo de Template de Email</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&family=Rock+Salt&family=Vina+Sans&family=Wittgenstein:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: "Wittgenstein", serif;
-            font-optical-sizing: auto;
-            font-weight: 500;
-            font-style: normal;
-            margin: 1%;
-            padding: 1px;
-            background-image: url(fundo.jpg);
-            background-size: 100%;
-            padding: center;
-        }
-
-        ::-webkit-scrollbar { 
-            width: 0px;
-        } 
-
-        .container {
-            background: fixed;
-            width: 100%;
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            height: 700px;
-            background-color: #2D2B33;
-            border-radius: 3%;
-            box-shadow: 0 0 10px;
-
-        }
-        .header {
-            background-color:#2D2B33;
-            background: fixed;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
-        .content {
-            padding: 20px;
-            background-color:#2D2B33;
-            background: fixed;
-        }
-        .footer {
-            text-align:center;
-            padding: 0px;
-            width: 600px;
-            font-size: 18px;
-            color: #fcfcfc;
-            background: fixed;
-        }
-
-        p {
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Equipe JHC</h1>
-        </div>
-        <div class="content">
-            <p>Olá,</p>
-            <p>Esse e-mail foi criado pela equipe JHC, ele é um bot que envia e-mails automaticamente. Apelidado de Botin :D, Ele foi desenvolvido para servir de projeto para o TCC da equipe.</p>
-            <p>Obrigado pela atenção! 💻</p>
-            <iframe src="https://giphy.com/embed/26tn33aiTi1jkl6H6" width="580" height="269" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/screen-monitor-closeup-26tn33aiTi1jkl6H6"></a>
-        </div>
-        <div class="footer">
-            <p>Serviços JHC.</p>
-        </div>
-    </div>
-</body>
-</html>"""
-
+    
     try:
 
         # => Crie uma conexão com o servidor SMTP
