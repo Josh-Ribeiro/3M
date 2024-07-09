@@ -1,6 +1,12 @@
 import os
 from dotenv import load_dotenv 
 
+# => Função para ler os emails do arquivo
+def ler_emails_arquivo(nome_arquivo):
+    with open(nome_arquivo, 'r') as file:
+        emails = [linha.strip() for linha in file.readlines()]
+    return emails
+
 if __name__ == "__main__":
     os.chdir('/workspaces/Elysium_py/TCC')
     load_dotenv()
@@ -13,7 +19,9 @@ if __name__ == "__main__":
     seu_email = os.getenv('login_email')
     app_password = os.getenv('password_app')
 
-    destinatarios = ['csbj0714@gmail.com', 'josufribeiro@gmail.com', 'hugosantoss093@gmail.com']
+    caminho_arquivo_emails = 'emails.txt'
+    destinatarios = ler_emails_arquivo(caminho_arquivo_emails)
+    
     assunto = "Olá Mundo!"
     corpo_email = "Este é um email de teste usando a biblioteca smtplib em Python."
 
