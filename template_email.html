@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <title>Exemplo de Template de Email</title>
     <style>
-        body {
-            font-family: "Wittgenstein", serif;
-            font-optical-sizing: auto;
-            font-weight: 500;
+        @font-face {
+            font-family: 'JetBrains';
+            src: url('JetBrainsMono.ttf') format('opentype'), url('JetBrainsMono.tff') format('truetype');
+            font-weight: normal;
             font-style: normal;
+        }
+
+
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             margin: 1%;
             padding: 1px;
             background-image: url(fundo.jpg);
@@ -20,12 +25,18 @@
             width: 0px;
         } 
 
+        .logo {
+            padding: 13px;
+            margin: 7px;
+            border: 24px;
+        }
+
         .container {
             background: fixed;
             width: 100%;
             max-width: 600px;
             margin: auto;
-            padding: 20px;
+            padding: 5px;
             height: 700px;
             background-color: #2D2B33;
             border-radius: 3%;
@@ -36,40 +47,47 @@
             background-color:#2D2B33;
             background: fixed;
             color: white;
-            text-align: center;
-            padding: 10px 0;
+            text-align:center;
+            padding: 1px;
         }
         .content {
-            padding: 20px;
+            padding: 35px;
             background-color:#2D2B33;
             background: fixed;
         }
         .footer {
             text-align:center;
-            padding: 0px;
-            width: 600px;
-            font-size: 18px;
+            padding: 226px;
+            width: 145px;
             color: #fcfcfc;
             background: fixed;
         }
-
-        p {
-            color: white;
+        
+        h2 {
+            color: rgb(114, 172, 213);
+            font-size: 17px;
         }
+
+        h3 {
+            color: white;
+            font-size: 17px;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="logo"><img src="cid:Logo.png" alt="Logo JHC" width="150px" style="display: block; margin-bottom: 10px;"></div>
         <div class="header">
-            <h1>Equipe JHC</h1>
+            <h1 style="margin-top: 0;">Equipe JHC</h1>
         </div>
         <div class="content">
-            <p>Olá,</p>
-            <p>Esse e-mail foi criado pela equipe JHC, ele é um bot que envia e-mails automaticamente. Apelidado de Botin :D, Ele foi desenvolvido para servir de projeto para o TCC da equipe.</p>
-            <p>Obrigado pela atenção! 💻</p>
+            <h2>Olá Cliente !</h2>
+            <h3>Esse e-mail foi criado pela equipe JHC, ele é um bot que envia e-mails automaticamente. Apelidado de Botin :D, Ele foi desenvolvido para servir de projeto para o TCC da equipe.</h3>
+            <h3>Obrigado pela atenção! 💻</h3>
         </div>
         <div class="footer">
-            <p>Serviços JHC.</p>
+            <p>&copy; 2024 Serviços JHC.</p>
         </div>
     </div>
 </body>

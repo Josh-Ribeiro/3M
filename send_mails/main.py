@@ -7,6 +7,7 @@ def ler_emails_arquivo(nome_arquivo):
         emails = [linha.strip() for linha in file.readlines()]
     return emails
 
+# => Função de ler o arquivo templete_email.html e retornar ao arquivo main.py
 def ler_template_html(caminho_arquivo):
     with open(caminho_arquivo, 'r', encoding='utf-8') as file:
         return file.read()
@@ -18,6 +19,7 @@ if __name__ == "__main__":
     import smtplib
     from email.mime.text import MIMEText
     from email.mime.multipart import MIMEMultipart
+    from email.mime.image import MIMEImage
 
     # => Substitua pelos seus dados
     seu_email = os.getenv('login_email')
@@ -41,7 +43,7 @@ if __name__ == "__main__":
             smtp_server.login(seu_email, app_password)
 
             for destinatario in destinatarios:
-                msg = MIMEMultipart()
+                msg = MIMEMultipart('related')
                 msg['From'] = seu_email
                 msg['To'] = destinatario
                 msg['Subject'] = assunto
@@ -49,6 +51,12 @@ if __name__ == "__main__":
                 # => Crie um objeto MIMEText para o corpo do email
                 corpo_msg = MIMEText(corpo_email_html, 'html')
                 msg.attach(corpo_msg)
+
+                # Anexe a imagem ao email
+                with open("/workspaces/Elysium_py/TCC/Logo.png", 'rb') as img:
+                    mime_image = MIMEImage(img.read())
+                    mime_image.add_header('Content-ID', '<Logo.png>')
+                    msg.attach(mime_image)
 
                 # => Envia o email
                 smtp_server.sendmail(seu_email, destinatario, msg.as_string())
