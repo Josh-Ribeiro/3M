@@ -1,51 +1,71 @@
-
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv 
+
+# => Função para ler os emails do arquivo
+def ler_emails_arquivo(nome_arquivo):
+    with open(nome_arquivo, 'r') as file:
+        emails = [linha.strip() for linha in file.readlines()]
+    return emails
+
+# => Função de ler o arquivo templete_email.html e retornar ao arquivo main.py
+def ler_template_html(caminho_arquivo):
+    with open(caminho_arquivo, 'r', encoding='utf-8') as file:
+        return file.read()
+
 if __name__ == "__main__":
-    os.chdir('tcc')
-load_dotenv()
+    os.chdir('/workspaces/Elysium_py/TCC')
+    load_dotenv()
 
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-# => Substitua pelos seus dados
-seu_email = os.getenv('login_gmail')
-app_password = os.getenv('password_app')
+    import smtplib
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.image import MIMEImage
 
-destinatarios = ['csbj0714@gmail.com', 'josufribeiro@gmail.com', 'hugosantoss093@gmail.com']
-assunto = "Olá Mundo!"
-corpo_email = "Este é um email de teste usando a biblioteca smtplib em Python."
+    # => Substitua pelos seus dados
+    seu_email = os.getenv('login_email')
+    app_password = os.getenv('password_app')
 
-try:
-
-    # => Crie uma conexão com o servidor SMTP
-    with smtplib.SMTP("smtp.gmail.com", 587) as smtp_server:
-    # => Ative a segurança TLS
-        smtp_server.starttls()
-    # => Faça login no servidor
-        smtp_server.login(seu_email, app_password)
-
-
-        for destinatario in destinatarios:
-            msg = MIMEMultipart()
-            msg['From'] = seu_email
-            msg['To'] = destinatario
-            msg['Subject'] = assunto
+    caminho_arquivo_emails = 'emails.txt'
+    destinatarios = ler_emails_arquivo(caminho_arquivo_emails)
+    
+    caminho_templete_html = 'template_email.html'
+    corpo_email_html = ler_template_html(caminho_templete_html)
         
-            # => Crie um objeto MIMEText para o corpo do email
-            corpo_msg = MIMEText(corpo_email, 'plain')
-            msg.attach(corpo_msg)
+    assunto = "J.H.C"
+    
+    try:
 
-            # => Envia o email
-            smtp_server.sendmail(seu_email, destinatario, msg.as_string())
-            print(f"Email enviado para {destinatario}")
+        # => Crie uma conexão com o servidor SMTP
+        with smtplib.SMTP("smtp.gmail.com", 587) as smtp_server:
+        # => Ative a segurança TLS
+            smtp_server.starttls()
+        # => Faça login no servidor
+            smtp_server.login(seu_email, app_password)
 
-    print("Todos os emails foram enviados com sucesso!")
-except smtplib.SMTPAuthenticationError:
-    print("Erro de autenticação. Verifique seu email e senha.")
-except smtplib.SMTPException as e:
-    print(f"Ocorreu um erro ao enviar o email: {e}")
-except Exception as e:
-    print(f"Ocorreu um erro inesperado: {e}")
+            for destinatario in destinatarios:
+                msg = MIMEMultipart('related')
+                msg['From'] = seu_email
+                msg['To'] = destinatario
+                msg['Subject'] = assunto
 
+                # => Crie um objeto MIMEText para o corpo do email
+                corpo_msg = MIMEText(corpo_email_html, 'html')
+                msg.attach(corpo_msg)
 
+                # Anexe a imagem ao email
+                with open("/workspaces/Elysium_py/TCC/Logo.png", 'rb') as img:
+                    mime_image = MIMEImage(img.read())
+                    mime_image.add_header('Content-ID', '<Logo.png>')
+                    msg.attach(mime_image)
+
+                # => Envia o email
+                smtp_server.sendmail(seu_email, destinatario, msg.as_string())
+                print(f"Email enviado para {destinatario}")
+
+        print("Todos os emails foram enviados com sucesso!")
+    except smtplib.SMTPAuthenticationError:
+        print("Erro de autenticação. Verifique seu email e senha.")
+    except smtplib.SMTPException as e:
+        print(f"Ocorreu um erro ao enviar o email: {e}")
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
