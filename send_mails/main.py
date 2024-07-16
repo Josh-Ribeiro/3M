@@ -31,7 +31,7 @@ if __name__ == "__main__":
     caminho_templete_html = 'template_email.html'
     corpo_email_html = ler_template_html(caminho_templete_html)
         
-    assunto = "Olá Mundo!"
+    assunto = ""
     
     try:
 
