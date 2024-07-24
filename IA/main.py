@@ -66,5 +66,5 @@ def classify_from_file(file_path):
         print(f"O arquivo {file_path} não foi encontrado. Verifique o caminho e tente novamente.")
 
 # Testa a função de classificação a partir do arquivo
-file_path = '/workspaces/Elysium_py/TCC/IA/input.txt'  # Especifique o caminho absoluto se necessário
+file_path = '/workspaces/Elysium_py/TCC/input.txt'  # Especifique o caminho absoluto se necessário
 classify_from_file(file_path)
